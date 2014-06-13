@@ -4,12 +4,41 @@ angular.module("sportsStore")
 
 		var productsRef = new Firebase(productsURL);
 
-		/*productsRef.push({
+		/*productsRef.push(
+		{
 			"Name" : "Kayak",
 			"Description" : "A boat for one person",
 			"Category" : "Watersports",
 			"Price" : "275"
-		}); */
+		}
+		);
+
+		productsRef.push(
+		{
+			"Name": "Lifejacket",
+			"Description" : "Protective and fashionable",
+			"Category" : "Watersports",
+			"Price" : "48.95"
+		}
+		);
+
+		productsRef.push(
+		 {
+			"Name": "Soccer Ball",
+			"Description" : "FIFA-approved size and weight",
+			"Category" : "Socccer",
+			"Price" : "19.50"
+		}
+		);
+
+		productsRef.push(
+		{
+			"Name": "Corner Flags",
+			"Description" : "Give your playing field a professional touch",
+			"Category" : "Soccer",
+			"Price" : "34.95"
+		}
+		); */
 
 		$scope.data = {}
 		$scope.data.products = []
@@ -20,6 +49,7 @@ angular.module("sportsStore")
 		  product_dict["description"] = product.Description
 		  product_dict["category"] = product.Category
 		  product_dict["price"] = product.Price
+		  product_dict["id"] = snapshot.name();
 		  $scope.data.products.push(product_dict);
 		  $scope.$digest();
 		});
