@@ -1,6 +1,7 @@
 angular.module("sportsStore")
 	.constant("productsURL", "https://incandescent-fire-5353.firebaseio.com/products")
-	.controller("sportsStoreCtrl", function ($scope, $firebase, productsURL) {
+	.constant("ordersURL", "https://incandescent-fire-5353.firebaseio.com/orders")
+	.controller("sportsStoreCtrl", function ($scope, $firebase, productsURL, ordersURL, cart) {
 
 		var productsRef = new Firebase(productsURL);
 
@@ -54,46 +55,24 @@ angular.module("sportsStore")
 		  $scope.$digest();
 		});
 
+		$scope.sendOrder = function(shippingDetails) {
 
-		/*$scope.data = {
-			products : [
-			{
-				name: "Product #1",
-				description: "A product",
-				category: "Category #1",
-				price: 100
-			},
-			{
-				name: "Product #2",
-				description: "A product",
-				category: "Category #1",
-				price: 100
-			},
-			{
-				name: "Product #3",
-				description: "A product",
-				category: "Category #2",
-				price: 100
-			},
-			{
-				name: "Product #1",
-				description: "A product",
-				category: "Category #1",
-				price: 100
-			},
-			{
-				name: "Product #2",
-				description: "A product",
-				category: "Category #1",
-				price: 100
-			},
-			{
-				name: "Product #3",
-				description: "A product",
-				category: "Category #2",
-				price: 100
+			var order = angular.copy(shippingDetails);
+			var products = cart.getProducts();
+			var products_array = [];
+			for(var i = 0; i < products.length; i++) {
+				product = {}
+				product.name = products[i].name
+				product.count = products[i].count
+				product.id = products[i].id
+				product.price = products.price
+				products_array.push(product)
 			}
-			]
-		}; */
+
+			order.products = products_array;
+
+			var orderRef = new Firebase(ordersURL);
+			orderRef.push(order);
+		}
 
 });
