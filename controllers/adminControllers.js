@@ -55,25 +55,33 @@ angular.module("sportsStoreAdmin")
     var productsRef = new Firebase(productsURL);
     ordersRef.on("child_added", function(snap) {
 
-        this.order = snap.val()
+        //assign scope
         this.scope = $scope
-        this.orders = $scope.orders;
-        var order_id = snap.name();
-        this.order.id = order_id;
 
-        var ordersProductsRef = ordersRef.child(order_id).child("products");
+        //grab the order
+        this.order = snap.val()
+
+        //assign unique order id to the order object
+        this.order.id = snap.name();
+
+        //assign an empty array to products
         this.order.products = []
+
+        //push order onto the array
         $scope.orders.push(order);
+
+        var ordersProductsRef = ordersRef.child(this.order.id).child("products");
         ordersProductsRef.on("child_added", function(snap) {
             productsRef.child(snap.name()).once("value", function(dataSnapshot) {
                 var product = dataSnapshot.val();
                 product.count = 1;
                 this.order.products.push(product);
 
+                //add the order object back to the array with the updated products
                 for(var i = 0; i < this.scope.orders.length; i++) {
                     var array_id = this.scope.orders[i].id;
                     if(order.id == array_id) {
-                        this.scope.orders[i] = order;
+                        scope.orders[i] = order;
                     }
                 }
                 scope.$digest();
