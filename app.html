@@ -5,7 +5,7 @@
     <script src="angular.js"></script>
     <script src="https://cdn.firebase.com/js/client/1.0.15/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.min.js"></script>
-
+    <script src='https://cdn.firebase.com/js/simple-login/1.5.0/firebase-simple-login.js'></script>
     <link href="bootstrap.css" rel="stylesheet" />
     <link href="bootstrap-theme.css" rel="stylesheet" />
     <script>
@@ -40,10 +40,13 @@
     <script src="controllers/checkoutControllers.js"></script>
     <script src="components/cart/cart.js"></script>
     <script src="ngmodules/angular-route.js"></script>
+    <script src="ngmodules/angular-resource.js"></script>
 </head>
 <body ng-controller="sportsStoreCtrl">
     <div class="navbar navbar-inverse">
         <a class="navbar-brand" href="#">SPORTS STORE</a>
+        <a ng-hide="data.user" href="#/login">Login</a>
+        <a ng-show="data.user" ng-click='logout()'>Logout</a>
         <cart-summary />
     </div>
     <ng-view />
