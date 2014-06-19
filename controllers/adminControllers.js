@@ -64,24 +64,21 @@ angular.module("sportsStoreAdmin")
         var ordersProductsRef = ordersRef.child(order_id).child("products");
         this.order.products = []
         $scope.orders.push(order);
-        $this = this
         ordersProductsRef.on("child_added", function(snap) {
-            var order = $this.order;
-            var scope = $this.scope;
             productsRef.child(snap.name()).once("value", function(dataSnapshot) {
                 var product = dataSnapshot.val();
                 product.count = 1;
-                order.products.push(product);
+                this.order.products.push(product);
 
-                for(var i = 0; i < scope.orders.length; i++) {
-                    var array_id = scope.orders[i].id;
+                for(var i = 0; i < this.scope.orders.length; i++) {
+                    var array_id = this.scope.orders[i].id;
                     if(order.id == array_id) {
-                        scope.orders[i] = order;
+                        this.scope.orders[i] = order;
                     }
                 }
                 scope.$digest();
-            });
-        });
+            }, {order: this.order, scope:this.scope});
+        }, {order: this.order, scope: this.scope});
     });
 
     $scope.selectedOrder;
