@@ -2,7 +2,7 @@ angular.module("sportsStoreAdmin")
 .constant("firebaseURL", "https://incandescent-fire-5353.firebaseio.com")
 .constant("ordersURL", "https://incandescent-fire-5353.firebaseio.com/orders")
 .constant("productsURL", "https://incandescent-fire-5353.firebaseio.com/products")
-.controller("authCtrl", function($scope, $http, $location, firebaseURL) {
+.controller("authCtrl", function($scope, $http, $location, $resource, firebaseURL) {
 
         $scope.data = {}
 
